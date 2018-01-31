@@ -1,0 +1,183 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>com.patrickdizon</groupId>
+  <artifactId>test</artifactId>
+  <packaging>war</packaging>
+  <version>1.0</version>
+  <name>test Maven Webapp</name>
+  <url>http://maven.apache.org</url>
+  <profiles>
+   <profile>
+     <id>debug</id>
+     <build>
+       <plugins>
+         <plugin>
+           <artifactId>maven-antrun-plugin</artifactId>
+           <executions>
+             <execution>
+               <phase>test</phase>
+               <goals>
+                 <goal>run</goal>
+               </goals>
+               <configuration>
+                 <tasks>
+                   <delete file="${project.build.outputDirectory}/application.properties"/>
+                   <copy file="src/main/resources/application.debug.properties"
+                         tofile="${project.build.outputDirectory}/application.properties"/>
+                 </tasks>
+               </configuration>
+             </execution>
+           </executions>
+         </plugin>
+         <plugin>
+           <artifactId>maven-surefire-plugin</artifactId>
+           <configuration>
+             <skip>true</skip>
+           </configuration>
+         </plugin>
+         <plugin>
+           <artifactId>maven-jar-plugin</artifactId>
+           <executions>
+             <execution>
+               <phase>package</phase>
+               <goals>
+                 <goal>jar</goal>
+               </goals>
+               <configuration>
+                 <classifier>test</classifier>
+               </configuration>
+             </execution>
+           </executions>
+         </plugin>
+       </plugins>
+     </build>
+   </profile><profile>
+     <id>release</id>
+     <build>
+       <plugins>
+         <plugin>
+           <artifactId>maven-antrun-plugin</artifactId>
+           <executions>
+             <execution>
+               <phase>test</phase>
+               <goals>
+                 <goal>run</goal>
+               </goals>
+               <configuration>
+                 <tasks>
+                   <delete file="${project.build.outputDirectory}/application.properties"/>
+                   <copy file="src/main/resources/application.release.properties"
+                         tofile="${project.build.outputDirectory}/application.properties"/>
+                 </tasks>
+               </configuration>
+             </execution>
+           </executions>
+         </plugin>
+         <plugin>
+           <artifactId>maven-surefire-plugin</artifactId>
+           <configuration>
+             <skip>true</skip>
+           </configuration>
+         </plugin>
+         <plugin>
+           <artifactId>maven-jar-plugin</artifactId>
+           <executions>
+             <execution>
+               <phase>package</phase>
+               <goals>
+                 <goal>jar</goal>
+               </goals>
+               <configuration>
+                 <classifier>test</classifier>
+               </configuration>
+             </execution>
+           </executions>
+         </plugin>
+       </plugins>
+     </build>
+   </profile>
+  </profiles>
+  <dependencies>
+    <!-- https://mvnrepository.com/artifact/junit/junit -->
+	<dependency>
+	    <groupId>junit</groupId>
+	    <artifactId>junit</artifactId>
+	    <version>3.8.2</version>
+	    <scope>test</scope>
+	</dependency>
+
+
+    <!-- https://mvnrepository.com/artifact/org.springframework/spring-webmvc -->
+	<dependency>
+	    <groupId>org.springframework</groupId>
+	    <artifactId>spring-webmvc</artifactId>
+	    <version>5.0.3.RELEASE</version>
+	</dependency>
+	<!-- https://mvnrepository.com/artifact/org.hibernate/hibernate-core -->
+	<dependency>
+	    <groupId>org.hibernate</groupId>
+	    <artifactId>hibernate-core</artifactId>
+	    <version>5.2.12.Final</version>
+	</dependency>
+	<!-- https://mvnrepository.com/artifact/org.springframework/spring-orm -->
+	<dependency>
+	    <groupId>org.springframework</groupId>
+	    <artifactId>spring-orm</artifactId>
+	    <version>5.0.3.RELEASE</version>
+	</dependency>
+	<!-- https://mvnrepository.com/artifact/mysql/mysql-connector-java -->
+	<dependency>
+	    <groupId>mysql</groupId>
+	    <artifactId>mysql-connector-java</artifactId>
+	    <version>6.0.6</version>
+	</dependency>
+	<!-- https://mvnrepository.com/artifact/com.mchange/c3p0 -->
+	<dependency>
+	    <groupId>com.mchange</groupId>
+	    <artifactId>c3p0</artifactId>
+	    <version>0.9.5.2</version>
+	</dependency>
+	<!-- https://mvnrepository.com/artifact/org.springframework/spring-tx -->
+	<dependency>
+	    <groupId>org.springframework</groupId>
+	    <artifactId>spring-tx</artifactId>
+	    <version>5.0.3.RELEASE</version>
+	</dependency>
+	<!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-core -->
+	<!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-core -->
+	<dependency>
+	    <groupId>com.fasterxml.jackson.core</groupId>
+	    <artifactId>jackson-core</artifactId>
+	    <version>2.9.4</version>
+	</dependency>
+
+	<dependency>
+	    <groupId>com.fasterxml.jackson.core</groupId>
+	    <artifactId>jackson-databind</artifactId>
+	    <version>2.9.4</version>
+	</dependency>
+  </dependencies>
+  <build>
+   <resources>
+        <resource>
+            <directory>src/main/resources</directory>
+            <filtering>true</filtering>
+        </resource>
+    </resources><plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-resources-plugin</artifactId>
+        <version>2.7</version>
+         <configuration>
+           <delimiters>
+             <delimiter>@</delimiter>
+           </delimiters>
+           <useDefaultDelimiters>false</useDefaultDelimiters>
+         </configuration>
+      </plugin>
+    </plugins>
+    <finalName>test</finalName>
+  </build>
+  
+</project>
